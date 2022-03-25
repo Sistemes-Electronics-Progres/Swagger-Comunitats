@@ -1,3 +1,3 @@
 ## GitHub Pages
 
-https://github.com/Sistemes-Electronics-Progres/Swagger-Comunitats
+https://sistemes-electronics-progres.github.io/Swagger-Comunitats/#/
