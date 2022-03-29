@@ -399,6 +399,212 @@ paths:
           description: "Invalid input"
         "403":
           description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/programas/{id_programa}:
+    get:
+      tags:
+      - "Programas"
+      summary: "Obtener Programa por ID"
+      description: ""
+      operationId: "getProgramaId"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_programa"
+        in: "path"
+        description: "ID del programa"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Programa encontrado"
+          schema:
+              $ref: "#/definitions/Programas"
+    post:
+      tags:
+      - "Programas"
+      summary: "Enviar programa al equipo"
+      description: ""
+      operationId: "enviarPrograma"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_programa"
+        in: "path"
+        description: "ID del programa"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto del programa a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/Programas"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/Programas"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/programas:
+    get:
+      tags:
+      - "Programas"
+      summary: "Obtener array de Programas"
+      description: ""
+      operationId: "getProgramas"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Programas encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Programas"
+  /equipos/{id_equipo}/sectores/{id_sector}:
+    get:
+      tags:
+      - "Sectores"
+      summary: "Obtener Sector por ID"
+      description: ""
+      operationId: "getSectorId"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_sector"
+        in: "path"
+        description: "ID del sector"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Programa encontrado"
+          schema:
+              $ref: "#/definitions/Sectores"
+    post:
+      tags:
+      - "Sectores"
+      summary: "Enviar sector al equipo"
+      description: ""
+      operationId: "enviarSector"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_sector"
+        in: "path"
+        description: "ID del sector"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto del sector a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/Sectores"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/Sectores"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/sectores:
+    get:
+      tags:
+      - "Sectores"
+      summary: "Obtener array de Sectores"
+      description: ""
+      operationId: "getSectores"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Sectores encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Sectores"
 definitions:
   Fertilizante:
     type: "object"
@@ -413,7 +619,7 @@ definitions:
         format: "int32"
         default: 1
         readOnly: true
-      comptador:
+      contador:
         type: "integer"
         format: "int32"
         default: 0
@@ -467,40 +673,40 @@ definitions:
       periodoActivo:
         type: "boolean"
         default: false
-        description: "Descripción periodo activo"
+        description: "Si: Permite configurar para cada programa un periodo dentro del año operativo"
       horarioActivo:
         type: "boolean"
         default: false
-        description: "Descripción horario activo"
+        description: "Si: Permite configurar para cada programa una ventana horaria que se habilita iniciar riegos por condicionantes"
       activaciones:
         type: "boolean"
         default: false
-        description: "Descripción activaciones"
+        description: "Si: Permite configurar para cada programa si va a realizar riegos pulsados con varias activaciones separadas por un tiempo"
       volumenTiempo:
         type: "boolean"
-        default: false
-        description: "Descripción..."
+        default: true
+        description: "Si: para indicar que se quiere regar por tiempo"
       decimalesRiego:
         type: "integer"
         format: "int32"
         default: 0
-        description: "Descripción..."
+        description: "[riego de 00000m3 a 000.00m3 (0 a 2)]"
       decimalesFert:
         type: "integer"
         format: "int32"
         default: 0
-        description: "Descripción..."
+        description: "[Fertilizante de 00000L a 000.00L (0 a 2)]"
       salidaAlarma:
         type: "integer"
         format: "int32"
         default: 0
-        description: "Descripción..."
+        description: "Salida del equipo para alarma"
       estadoAlarma:
         type: "integer"
         format: "int32"
         default: 0
-        readOnly: true
-        description: "Descripción..."
+        readOnly: false
+        description: "Estado que se encuentra la alarma"
       modificado: 
         type: "integer"
         format: "int32"
@@ -528,13 +734,14 @@ definitions:
         type: "integer"
         format: "int32"
         default: 0
+        description: "Numero de entrada donde va conectado el sensor"
       formato:
         type: "integer"
         format: "int32"
         default: 0
         minimum: 0
         maximum: 40
-        description: "min:0,max:40"
+        description: "La unidad en que el sensor muestra el valor"
       tara:
         type: "integer"
         format: "int32"
@@ -544,7 +751,7 @@ definitions:
         type: "integer"
         format: "int32"
         default: 0
-        description: "Tiempo en minutos de lectura del sensor"
+        description: "Tiempo entre lecturas en minutos para realizar la lectura del sensor"
       tiempoLectura:
         type: "integer"
         format: "int32"
@@ -561,8 +768,10 @@ definitions:
         type: "integer"
         format: "int32"
         default: 0
+        description: "Salida del equipo que alimentará la sonda"
       nombre:
         type: "string"
+        description: "texto identificativo del sensor"
       estado: 
         type: "integer"
         format: "int32"
@@ -572,7 +781,7 @@ definitions:
       lectura:
         type: "number"
         default: 0
-        description: "Valor de lectura instantaneo del sensor"
+        description: "Valor de lectura del sensor"
         readOnly: true
       unidad:
         type: "string"
@@ -588,13 +797,396 @@ definitions:
         type: "string"
         format: "date-time"
         readOnly: true
+  Programas:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: ""
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: ""
+        readOnly: true
+      TipoInicio:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "[PROG_INI_HORAI, PROG_INI_SEQUENCIAL, PROG_INI_CONDICIONAL, PROG_INI_DISP]"
+      UnidadRiego:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "[UTS_REG_MINUTS, UTS_REG_M3, UTS_REG_M3_HA, UTS_REG_SEGONS, UTS_REG_TEMPS_HA]"
+      PreRiego:
+        type: "number"
+        default: 0
+        description: "volumen o tiempo de pre riego"
+      PostRiego:
+        type: "number"
+        default: 0
+        description: "volumen o tiempo de pre riego"
+      Fertilizante:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de fertilizante a utilizar"
+      TiempoInicios:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Tiempo de seguridad entre inicios (1=1min 2=2min...)"
+      GrupoRiego:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "De 0 a 9 (0 no tiene grupo de riego)"
+      Texto:
+        type: "string"
+      Condicional1:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de condicionante que afecta al programa"
+      Condicional2:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de condicionante que afecta al programa"
+      Condicional3:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de condicionante que afecta al programa"      
+      Condicional4:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de condicionante que afecta al programa" 
+      Condicional5:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de condicionante que afecta al programa"
+      Sector1:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de sector para asignar al programa"
+      Sector2:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de sector para asignar al programa"
+      Sector3:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de sector para asignar al programa"
+      Sector4:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de sector para asignar al programa"
+      Inicio:
+        type: "string"
+        format: "date-time"
+        description: "Fecha y hora  (DD/MM/yyyy HH:mm)"
+      CantidadRiego:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Cantidad de riego en volumen o tiempo"
+      CantidadFertilizante:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Cantidad de fertilizante en volumen o tiempo"
+      TiempoRiego:
+        type: "string"
+        description: "tiempo de riego en minutos"
+      TiempoFertilizante:
+        type: "integer"
+        description: "tiempo de fertilizante en minutos"
+      DiasRiego:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Freqüencia de dias para activar el programa (0-Lunes...6-Domingo)"
+      Activaciones:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de activaciones del programa"
+      Frequencia:
+        type: "string"
+        description: "tiempo entre activaciones en minutos"
+      DiaInicio:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Dia en que comienza el periodo activo del programa"
+      MesInicio:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Mes en que comienza el periodo activo del programa"
+      DiaFinal:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Dia en que finaliza el periodo activo del programa"
+      MesFinal:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Mes en que finaliza el periodo activo del programa" 
+      HorarioInicio:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Hora que comienza el periodo activo del programa"
+      HorarioFinal:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "Hora en que finaliza el periodo activo del programa"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true       
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true  
+      MotivoInicio:
+        type: "integer"
+        format: "int32"
+        description: "[PROG_INICIAT_HORARI, PROG_INICIAT_SEQUENCIAL, PROG_INICIAT_COND, PROG_INICIAT_DISP, PROG_INICIAT_MANUAL]"
+        default: 0
+      MotivoAjornamiento:
+        type: "integer"
+        format: "int32"
+        description: "[PROG_AJOR_GRUP, PROG_AJOR_FERT, PROG_AJOR_TEMPS, PROG_AJOR_STOP, PROG_AJOR_PARO_COND, PROG_AJOR_SECT, PROG_AJOR_MANUAL, PROG_AJOR_PARO_DEF, PROG_AJOR_HORARI_ACTIU, PROG_AJOR_SEQ_ACTIU]"
+        default: 0 
+      XdiasDeRiego:
+        type: "integer"
+        format: "int32"
+        description: "Consulta de dias de riego [1=1dia, 2=dia...]"
+        readOnly: true
+      XActivaciones:
+        type: "integer"
+        format: "int32"
+        description: "consulta de activaciones"
+        readOnly: true
+      XTiempoSuspendido:
+        type: "integer"
+        format: "int32"
+        description: "consulta de tiempo suspendido en minuts [1=1min, 2=2min...]"
+        readOnly: true
+      XTiempoDeRiego:
+        type: "integer"
+        format: "int32"
+        description: "consulta de tiempo de riego en minutos [1=1min, 2=2min..."
+        readOnly: true
+      XTiempoDeFertiliozante:
+        type: "integer"
+        format: "int32"
+        description: "consulta de tiempo de fertilizante en minutos [1=1min, 2=2min..."
+        readOnly: true
+      XTiempoDeSeguridadInicios:
+        type: "integer"
+        format: "int32"
+        description: "consulta de tiempo de seguridad entre inicios"
+        readOnly: true
+      XFrequencia:
+        type: "integer"
+        format: "int32"
+        description: "Consulta de freqüencia de de dias de riego"
+        readOnly: true
+      XCantidadDeRiego:
+        type: "number"
+        description: "consulta de la cantida de riego"
+        readOnly: true
+      XCantidadDeFertilizante:
+        type: "number"
+        description: "consulta de cantidad de fertilizante"
+        readOnly: true
+      XPrePostRiego:
+        type: "integer"
+        format: "int32"
+        description: "Consulta de PRE y POST Riego"
+        readOnly: true
+      HacePreRiego:
+        type: "boolean"
+        default: "false"
+        description: "consulta si hace pre-riego"
+        readOnly: true
+      HacePostRiego:
+        type: "boolean"
+        default: "false"
+        description: "consulta si hace post-riego"
+        readOnly: true
+      Primero:
+        type: "integer"
+        format: "int32"
+        description: "Cosulta si el primer programa forma parte de una seqüencia alterna [1=true]"
+        readOnly: true
+  Sectores:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: ""
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: ""
+        readOnly: true 
+      Salida:
+        type: "integer"
+        format: "int32"
+        description: "numero de salida asignada al sector"
+      Auxiliar:
+        type: "integer"
+        format: "int32"
+        description: "numero de salida asignada al auxiliar del sector"
+      Contador:
+        type: "integer"
+        format: "int32"
+        description: "numero de sensor contador asignado al sector"
+      TiempoGolpeAriete:
+        type: "integer"
+        format: "int32"
+        minimum: -127
+        maximum: 127
+        description: "Temporización del golpe de ariete"
+      CaudalPrevisto:
+        type: "integer"
+        format: "int32"
+        description: "caudal previsto del sector (unidades según el formato caudal)"
+      Area:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 65525
+        description: "Area ocupada en m2"
+      Texto:
+        type: "string"
+        description: "nombre para asignar al sector"
+      General:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        description: "si tiene algun sector que le aga de general (0=no, 1 a numero de sector)"
+      Hidrante:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        description: "a que hidrante/general pertenece (0=ninguno, 1 a numero hidrante)"
+      Usuario:
+        type: "integer"
+        format: "int32"
+        description: "a que usuario est asignado el sector (0=ninguna, 1 a numero de usuario"
+      CoeficienteCorrector:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 255
+        description: "coeficiente de corrección (de 0.00 a 2.55)"
+      Cultivo:
+        type: "integer"
+        format: "int32"
+        description: "tipo de cultivo asociado al sector"
+      Longitud:
+        type: "integer"
+        format: "int32"
+        description: "coordenada grafica (en el equipo no se entra)"
+      Latitud:
+        type: "integer"
+        format: "int32"
+        description: "coordenada grafica (en el equipo no se entra)"
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: Temporal Paro, 3: Temporal Activo]"
+        default: 0
+        readOnly: true 
+      NumeroPrograma:
+        type: "integer"
+        format: "int32"
+        description: "Numero de progrma en que esta asignado"
+      Manual:
+        type: "boolean"
+        default: false
+        description: "accion manual del sector (false = Automaico, true = Manual Marxa)"
+      ParoMarcha:
+        type: "boolean"
+        default: false
+        description: "accion para parar el sector en manual (false = manual paro, true = manual marxa)"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true  
+      IdSector:
+        type: "integer"
+        format: "int32"
+        description: "indice global del sector"
+      MotivoParado:
+        type: "integer"
+        format: "int32"
+        description: "[SECT_NULL, SECT_HIDR, SECT_DISP, SECT_PROG, SECT_MANUAL, SECT_SALDO, SECT_DOTACIO]"
   ApiResponse:
     type: "object"
     properties:
       code:
         type: "integer"
         format: "int32"
+        default: 1
+        readOnly: true
       type:
         type: "string"
       message:
         type: "string"
+      Date:
+        type: "string"
+        format: "date-time"
+        description: "Fecha y hora para enviar al equipo (DD/MM/yyyy HH:mm)"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true       
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true  
