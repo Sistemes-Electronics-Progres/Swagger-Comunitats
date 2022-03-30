@@ -15,11 +15,546 @@ tags:
   description: "--"
 - name: "Programas"
   description: "--"
-- name: "Sensores"
-  description: ""
+- name: "Sensores Analogicos"
+  description: "--"
+- name: "Sectores"
+  description: "--"
+- name: "Condicionantes"
+  description: "--"
+- name: "Sensores Digitales"
+  description: "--"
+- name: "Sensores Contadores"
+  description: "--"
+- name: "Usuarios"
+  description: "--"
+- name: "Hidrantes"
+  description: "--"
 schemes:
 - "https"
-paths: 
+paths:
+  /equipos/{id_equipo}/hidrantes:
+    get:
+      tags:
+      - "Hidrantes"
+      summary: "Obtener array de Hidrantes"
+      description: ""
+      operationId: "getHidrantes"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Hidrantes encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Hidrantes"
+  /equipos/{id_equipo}/hidrantes/{id_hidrante}:
+    get:
+      tags:
+      - "Hidrantes"
+      summary: "Obtener hidrante por ID"
+      description: ""
+      operationId: "getHidranteId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_hidrante"
+        in: "path"
+        description: "ID del hidrante"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Usuario encontrado"
+          schema:
+              $ref: "#/definitions/Hidrantes"
+    post:
+      tags:
+      - "Hidrantes"
+      summary: "Enviar hidrante al equipo"
+      description: ""
+      operationId: "enviarHidrante"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_hidrante"
+        in: "path"
+        description: "ID del hidrante"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto del hidrante a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/Hidrantes"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/Hidrantes"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/usuarios:
+    get:
+      tags:
+      - "Usuarios"
+      summary: "Obtener array de Usuarios"
+      description: ""
+      operationId: "getUsuarios"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Usuarios encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Usuarios"
+  /equipos/{id_equipo}/usuarios/{id_usuario}:
+    get:
+      tags:
+      - "Usuarios"
+      summary: "Obtener usuario por ID"
+      description: ""
+      operationId: "getUsuarioId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_usuario"
+        in: "path"
+        description: "ID del usuario"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Usuario encontrado"
+          schema:
+              $ref: "#/definitions/Usuarios"
+    post:
+      tags:
+      - "Usuarios"
+      summary: "Enviar usuario al equipo"
+      description: ""
+      operationId: "enviarUsuario"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_usuario"
+        in: "path"
+        description: "ID del usuario"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto del usuario a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuarios"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/Usuarios"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/sensorescontadores:
+    get:
+      tags:
+      - "Sensores Contadores"
+      summary: "Obtener array de Sensores contadores"
+      description: ""
+      operationId: "getSensoresContadores"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Sensores contadores encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SensoresContadores"
+  /equipos/{id_equipo}/sensorescontadores/{id_sensor}:
+    get:
+      tags:
+      - "Sensores Contadores"
+      summary: "Obtener Sensor contador por ID"
+      description: ""
+      operationId: "getSensorContadorId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_sensor"
+        in: "path"
+        description: "ID del sensor"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Sensor encontrado"
+          schema:
+              $ref: "#/definitions/SensoresContadores"
+    post:
+      tags:
+      - "Sensores Contadores"
+      summary: "Enviar sensor contador al equipo"
+      description: ""
+      operationId: "enviarSensorContador"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_sensor"
+        in: "path"
+        description: "ID del sensor"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto del sensor a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/SensoresContadores"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/SensoresContadores"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/sensoresdigitales:
+    get:
+      tags:
+      - "Sensores Digitales"
+      summary: "Obtener array de Sensores digitales"
+      description: ""
+      operationId: "getSensoresDigitales"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Sensores digitales encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SensoresDigitales"
+  /equipos/{id_equipo}/sensoresdigitales/{id_sensor}:
+    get:
+      tags:
+      - "Sensores Digitales"
+      summary: "Obtener Sensor digital por ID"
+      description: ""
+      operationId: "getSensorDigitalId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_sensor"
+        in: "path"
+        description: "ID del sensorr"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Sensor encontrado"
+          schema:
+              $ref: "#/definitions/SensoresDigitales"
+    post:
+      tags:
+      - "Sensores Digitales"
+      summary: "Enviar sensor digital al equipo"
+      description: ""
+      operationId: "enviarSensorDigital"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_sensor"
+        in: "path"
+        description: "ID del sensor"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto del sensor a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/SensoresDigitales"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/SensoresDigitales"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/condicionantes:
+    get:
+      tags:
+      - "Condicionantes"
+      summary: "Obtener array de Condicionantes"
+      description: ""
+      operationId: "getCondiconantes"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Condiconantes encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Condicionantes"
+  /equipos/{id_equipo}/condicionantes/{id_condicionante}:
+    get:
+      tags:
+      - "Condicionantes"
+      summary: "Obtener Condicionante por ID"
+      description: ""
+      operationId: "getCondicionanteId"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_condicionante"
+        in: "path"
+        description: "ID del condicionante"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Condicionante encontrado"
+          schema:
+              $ref: "#/definitions/Condicionantes"
+    post:
+      tags:
+      - "Condicionantes"
+      summary: "Enviar Condicionante al equipo"
+      description: ""
+      operationId: "enviarCondicionante"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_condicionante"
+        in: "path"
+        description: "ID del condicionante"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto del condicionante a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/Condicionantes"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/Condicionantes"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
   /equipos/{id_equipo}/fertilizantes:
     get:
       tags:
@@ -297,7 +832,7 @@ paths:
   /equipos/{id_equipo}/sensoresanalogicos:
     get:
       tags:
-      - "Sensores"
+      - "Sensores Analogicos"
       summary: "Obtener array de Sensores analogicos"
       description: ""
       operationId: "getSensoresAnalogicos"
@@ -324,7 +859,7 @@ paths:
   /equipos/{id_equipo}/sensoresanalogicos/{id_sensor}:
     get:
       tags:
-      - "Sensores"
+      - "Sensores Analogicos"
       summary: "Obtener Sensor analogico por ID"
       description: ""
       operationId: "getSensorAnalogicoId"
@@ -358,7 +893,7 @@ paths:
               $ref: "#/definitions/SensorAnalogico"
     post:
       tags:
-      - "Sensores"
+      - "Sensores Analogicos"
       summary: "Enviar sensor analogico al equipo"
       description: ""
       operationId: "enviarSensorAnalogico"
@@ -399,6 +934,33 @@ paths:
           description: "Invalid input"
         "403":
           description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/programas:
+    get:
+      tags:
+      - "Programas"
+      summary: "Obtener array de Programas"
+      description: ""
+      operationId: "getProgramas"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Programas encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Programas"
   /equipos/{id_equipo}/programas/{id_programa}:
     get:
       tags:
@@ -475,13 +1037,13 @@ paths:
           description: "Invalid input"
         "403":
           description: "Sin acceso al equipo"
-  /equipos/{id_equipo}/programas:
+  /equipos/{id_equipo}/sectores:
     get:
       tags:
-      - "Programas"
-      summary: "Obtener array de Programas"
+      - "Sectores"
+      summary: "Obtener array de Sectores"
       description: ""
-      operationId: "getProgramas"
+      operationId: "getSectores"
       produces:
       - "application/json"
       parameters:
@@ -497,11 +1059,11 @@ paths:
         "405":
           description: "Invalid input"
         "200":
-          description: "Programas encontrados"
+          description: "Sectores encontrados"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Programas"
+              $ref: "#/definitions/Sectores"
   /equipos/{id_equipo}/sectores/{id_sector}:
     get:
       tags:
@@ -578,33 +1140,7 @@ paths:
           description: "Invalid input"
         "403":
           description: "Sin acceso al equipo"
-  /equipos/{id_equipo}/sectores:
-    get:
-      tags:
-      - "Sectores"
-      summary: "Obtener array de Sectores"
-      description: ""
-      operationId: "getSectores"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id_equipo"
-        in: "path"
-        description: "ID del equipo"
-        required: true
-        type: "integer"
-        maximum: 99999
-        minimum: 1
-        format: "int32"
-      responses:
-        "405":
-          description: "Invalid input"
-        "200":
-          description: "Sectores encontrados"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Sectores"
+
 definitions:
   Fertilizante:
     type: "object"
@@ -614,11 +1150,13 @@ definitions:
         format: "int32"
         default: 1
         readOnly: true
+        description: "identificador unico del objeto"
       idEquipo:
         type: "integer"
         format: "int32"
         default: 1
         readOnly: true
+        description: "identificdor del equipo"
       contador:
         type: "integer"
         format: "int32"
@@ -665,11 +1203,13 @@ definitions:
         format: "int32"
         default: 1
         readOnly: true
+        description: "identificador unico del objeto"
       idEquipo:
         type: "integer"
         format: "int32"
         default: 1
         readOnly: true
+        description: "identificdor del equipo"
       periodoActivo:
         type: "boolean"
         default: false
@@ -725,11 +1265,13 @@ definitions:
         format: "int32"
         default: 1
         readOnly: true
+        description: "identificador unico del objeto"
       idEquipo:
         type: "integer"
         format: "int32"
         default: 1
         readOnly: true
+        description: "identificdor del equipo"
       entrada:
         type: "integer"
         format: "int32"
@@ -780,6 +1322,7 @@ definitions:
         readOnly: true
       lectura:
         type: "number"
+        format: "float"
         default: 0
         description: "Valor de lectura del sensor"
         readOnly: true
@@ -804,13 +1347,13 @@ definitions:
         type: "integer"
         format: "int32"
         default: 1
-        description: ""
         readOnly: true
+        description: "identificador unico del objeto"
       idEquipo:
         type: "integer"
         format: "int32"
         default: 1
-        description: ""
+        description: "identificdor del equipo"
         readOnly: true
       TipoInicio:
         type: "integer"
@@ -824,10 +1367,12 @@ definitions:
         description: "[UTS_REG_MINUTS, UTS_REG_M3, UTS_REG_M3_HA, UTS_REG_SEGONS, UTS_REG_TEMPS_HA]"
       PreRiego:
         type: "number"
+        format: "float"
         default: 0
         description: "volumen o tiempo de pre riego"
       PostRiego:
         type: "number"
+        format: "float"
         default: 0
         description: "volumen o tiempo de pre riego"
       Fertilizante:
@@ -1022,6 +1567,7 @@ definitions:
         readOnly: true
       XCantidadDeFertilizante:
         type: "number"
+        format: "float"
         description: "consulta de cantidad de fertilizante"
         readOnly: true
       XPrePostRiego:
@@ -1051,13 +1597,13 @@ definitions:
         type: "integer"
         format: "int32"
         default: 1
-        description: ""
+        description: "identificador unico del objeto"
         readOnly: true
       idEquipo:
         type: "integer"
         format: "int32"
         default: 1
-        description: ""
+        description: "identificdor del equipo"
         readOnly: true 
       Salida:
         type: "integer"
@@ -1158,6 +1704,484 @@ definitions:
         type: "integer"
         format: "int32"
         description: "[SECT_NULL, SECT_HIDR, SECT_DISP, SECT_PROG, SECT_MANUAL, SECT_SALDO, SECT_DOTACIO]"
+  Condicionantes:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true    
+      Funcion:
+        type: "integer"
+        format: "int32"
+        description: "accion a relizar [FUNC_PARO_DEF, FUNC_PARO_TEMP, FUNC_PARO_COND, FUNC_INICI, FUNC_INICI_PARO, FUNC_AVIS, FUNC_MOD_REG, FUNC_MOD_FERT, FUNC_FI_PLUJA, FUNC_PARO_FERT]"
+      Origen:
+        type: "integer"
+        format: "int32"
+        description: "tipo de sensor asociado al condicionante [COND_ORG_SDIG, COND_ORG_SANA, COND_ORG_SCON, COND_ORG_CABAL]"
+      Sensor:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+        description: "numero de sensor asociado"
+      Texto:
+        type: "string"
+        description: "Nombre del condicionante"
+      Retardo:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999
+        description: "Retardo a la deteccion en segundos (1=1seg, 5=5seg...)"
+      RetardoInicio:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999
+        description: "Retardo al inicio en segundos (1=1seg, 5=5seg...)"        
+      ReatardoFuga:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999
+        description: "Retardo para marcar fuga en segundos (1=1seg, 5=5seg...)" 
+      A:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 65535
+        description: "Valor de referencia"
+      B:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 65535
+        description: "Diferencial del valor"
+      C:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 100
+        description: "% en que modifica el riego/fertilizante (punto 1)"
+      D:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 100
+        description: "% en que modifica el riego/fertilizante (punto 2)"
+      E:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 255
+        description: "Horas para calcular el valor integrado del condicionante"
+      SMSA:
+        type: "boolean"
+        default: false
+        description: "true, envia SMS al telefono A"
+      SMSB:
+        type: "boolean"
+        default: false
+        description: "true, envia SMS al telefono B"
+      SMSC:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de texto a enviar al telefono C"
+      Alarma:
+        type: "boolean"
+        default: false
+        description: "true, Activa la alarma"
+      Anomalia:
+        type: "boolean"
+        default: false
+        description: "true, marca anomalia cada vez que se activa el condicionante"
+      TodosProgramas:
+        type: "boolean"
+        default: false
+        description: "true, el condicionante afecta a todos los programas"
+      Urgente:
+        type: "boolean"
+        default: false
+        description: "true, activa el modem para enviar SMS fuera de horario"
+      ConectaPC:
+        type: "boolean"
+        default: false
+        description: "conecta con PC para enviar registros"
+      EstadoError:
+        type: "integer"
+        format: "int32"
+        description: "[COND_ERR_RES, COND_ERR_PARAT, COND_ERR_ACTIVAT]"
+        readOnly: true
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true       
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true  
+      EstadoCaudal:
+        type: "integer"
+        format: "int32"
+        description: "[COND_CAB_ERROR_SP, COND_CAB_ERROR_CA, COND_CAB_CB, COND_CAB_ERROR_FG]"
+        readOnly: true
+      XReatardo:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      Valor:
+        type: "integer"
+        format: "int32"
+        description: "valor del acumulado"
+        readOnly: true
+      ErrorSensor:
+        type: "boolean"
+        default: false
+        readOnly: true
+      EstadoCondicional:
+        type: "integer"
+        format: "int32"
+        description: "[COND_PARAT, COND_ACTIVAT, COND_FORA_SERVEI]"
+        readOnly: true
+  SensoresDigitales:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true   
+      entrada:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        default: 0
+        description: "numero de entrada asociada al sensor"
+      activadoCerrado:
+        type: "boolean"
+        default: false
+        description: "estado por defecto de la entrada (false=activación realizada con el cierre true=actuvación realizada con la apertura"
+      texto:
+        type: "string"
+        description: "Nombre para el sensor"
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true
+  SensoresContadores:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true 
+      entrada:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "numero de entrada digital"
+      valorPulso:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999999
+        description: "vaslor del pulso con dos decimales"
+      tiempoEntrePulsos:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 999
+        description: "tiempo entre dos pulsos para pasar el caudal instantaneo a 0"
+      formatoCaudal:
+        type: "integer"
+        format: "int32"
+        description: "[CON_CAB_M3H, CON_CAB_LH, CON_CAB_LS, CON_CAB_M3G_1, CON_CAB_LH1, CON_CAB_LS1]"
+      texto:
+        type: "string"
+        description: "nombre del contador"
+      tipo:
+        type: "integer"
+        format: "int32"
+        description: "[SCON_DIGITAL, SCON_ANALOGIC, SCON_FREQUENCIA, SCON_PLUVIOMETRE]"
+      puntoReferenciaReal1:
+        type: "integer"
+        format: "int32"
+        description: "valor en mili voltios para calcular el caudal instantaneo de un sensor contador analogico"
+      puntoReferenciaReal2:
+        type: "integer"
+        format: "int32"
+        description: "valor en mili voltios para calcular el caudal instantaneo de un sensor contador analogico"
+      puntoLogico1:
+        type: "integer"
+        format: "int32"
+        description: "valor logico para calcular el caudal instantaneo de un sensor contador analogico"
+      puntoLogico2:
+        type: "integer"
+        format: "int32"
+        description: "valor logico para calcular el caudal instantaneo de un sensor contador analogico"
+      usadoPor:
+        type: "integer"
+        format: "int32"
+        description: "[CON_USAT_NINGU, CON_USAT_REG, CON_USAT_FERT]"  
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true  
+      caudalInstantaneo:
+        type: "integer"
+        format: "int32"
+        description: "lectura del caudal"
+        readOnly: true
+      lectura:
+        type: "integer"
+        format: "int32"
+        description: "consumo del contador, en m3 o l/m2"
+        readOnly: true
+      dataLectura:
+        type: "string"
+        format: "date-time"
+        readOnly: true
+        description: "data desde cuando es valida la lectura"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true
+      tiempNoUsoPorFuga:
+        type: "integer"
+        format: "int32"
+        description: "tiempo que tiene de pasar antes de iniciar el control de fuga (se guarda minutos"
+  Usuarios:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true 
+      ident:
+        type: "integer"
+        format: "int32"
+        description: "codigo para acceder fisicamente en el equipo"
+      password:
+        type: "integer"
+        format: "int32"
+        description: "password para acceder fisicamente en el equipo"
+      diasFrequencia:
+        type: "boolean"
+        default: false
+        description: "true, para trabajar por dias de semana false, para trabajar por frequencia de dias"
+      sequencialesAlternos:
+        type: "boolean"
+        default: false
+        description: "true, los programas van alternando el inicio"
+      estado:
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true  
+      saldo:
+        type: "integer"
+        format: "int32"
+        description: "dinero que queda para regar"
+      dotacion:
+        type: "integer"
+        format: "int32"
+        description: "volumen que queda en m3"
+      modificadoUsuario:
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificadoUsuario:
+        type: "string"
+        format: "date-time"
+        readOnly: true    
+      modificadoGestor:
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificadoGestor:
+        type: "string"
+        format: "date-time"
+        readOnly: true    
+      texto:
+        type: "string"
+        description: "nombre del usuario"
+  Hidrantes:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true
+      tipoValvula:
+        type: "integer"
+        format: "int32"
+        description: "[HIDR_VALV_CAP, HIDR_VALV_HIDRAULICA, HIDR_VALV_MOTORIZADA]"
+      salidaAbrir:
+        type: "integer"
+        format: "int32"
+        description: "salida para abrir y cerrar si es hidraulica, si es motorizada para abrir"
+      salidaCerrar:
+        type: "integer"
+        format: "int32"
+        description: "salida para cerra solo la motorizada"
+      contador:
+        type: "integer"
+        format: "int32"
+        description: "contador generald del hidrante"
+      sectorActivos:
+        type: "integer"
+        format: "int32"
+        description: "numero maximo de sectores que pueden regar simultaneamente"
+      tiempoMarcha:
+        type: "integer"
+        format: "int32"
+        description: "retardo de marcha despues del activar el primer sector"
+      tiempoParo:
+        type: "integer"
+        format: "int32"
+        description: "retardo al paro despues del ultimo sector activo"
+      paroSectores:
+        type: "integer"
+        format: "int32"
+        description: "primero para los sectores y por ultimo hace el tiempro de paro a los sectores"
+      regulaCaudal:
+        type: "integer"
+        format: "int32"
+        description: "1=regula el caudal en motorizada"
+      errorMaximo:
+        type: "integer"
+        format: "int32"
+        description: "error maximo permitido son mover la motorizada"
+      tiempoTotal:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999
+        description: "tiempo total para abrir y cerrar"
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true  
+      refCaudal:
+        type: "integer"
+        format: "int32"
+        description: "suma los caudales previstos en los sectores que estan activos"
+      numSector:
+        type: "integer"
+        format: "int32"
+        description: "numero de sectores activos"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true
+      idHidrante:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      texto:
+        type: "string"
+      origenReferencia:
+        type: "integer"
+        format: "int32"
+        description: "[HIDR_REF_SECTOR, HIDR_REF_SANA]"
+      senAnalReferencia:
+        type: "integer"
+        format: "int32"
+        description: "motorizada regulada con origen sensor analogico"
+      finCarreraAbrir:
+        type: "integer"
+        format: "int32"
+        description: "entrada digital para final de carrera (solo motorizada)"
+      finCarreraCerrar:
+        type: "integer"
+        format: "int32"
+        description: "entrada digital para final de carrera (solo motorizada)"       
+      tiempoExtra:
+        type: "integer"
+        format: "int32"
+        description: "tiempo extra que mantiene en movimiento la valvula despues del final de carrera"
+      
   ApiResponse:
     type: "object"
     properties:
