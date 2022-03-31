@@ -29,9 +29,467 @@ tags:
   description: "--"
 - name: "Hidrantes"
   description: "--"
+- name: "Disponibilidad"
+  description: "--"
+- name: "Comunicaciones PC"
+  description: "--"
+- name: "Comunicaciones SMS"
+  description: "--"
+- name: "Opciones Instalador"
+  description: "--"
+- name: "Consulta Agronic"
+  description: "--"
+
 schemes:
 - "https"
 paths:
+  /equipos/{id_equipo}/consultaagronic:
+    get:
+      tags:
+      - "Consulta Agronic"
+      summary: "Obtener array de la consula Agronic"
+      description: ""
+      operationId: "getConsultaAgronic"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Consulta Agronic encontrado"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ConsultaAgronic"
+  /equipos/{id_equipo}/opcionesinstalador:
+    get:
+      tags:
+      - "Opciones Instalador"
+      summary: "Obtener Opciones Instalador"
+      description: ""
+      operationId: "getOpcionesInstalador"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Opciones Instalador encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/OpcionesInstalador"
+  /equipos/{id_equipo}/opcionesinstalador/{id_opcionesInstalador}:
+    get:
+      tags:
+      - "Opciones Instalador"
+      summary: "Obtener Opciones Instalador por ID"
+      description: ""
+      operationId: "getOpcionesInstaladorId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_opcionesInstalador"
+        in: "path"
+        description: "ID de las ociones de instalador"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "opciones instaldor encontradas"
+          schema:
+              $ref: "#/definitions/OpcionesInstalador"
+    post:
+      tags:
+      - "Opciones Instalador"
+      summary: "Enviar opciones instalador al equipo"
+      description: ""
+      operationId: "enviarOpcionesInstalador"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_opcionesInstalador"
+        in: "path"
+        description: "ID de la opciones instaldor"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto opciones instaldor a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/OpcionesInstalador"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/OpcionesInstalador"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/comunicacionessms:
+    get:
+      tags:
+      - "Comunicaciones SMS"
+      summary: "Obtener array de comunicaciones SMS"
+      description: ""
+      operationId: "getComunicacionesSMS"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Configuracion SMS encontrada"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ComunicacionesSMS"
+  /equipos/{id_equipo}/comunicacionessms/{id_comunicacionSMS}:
+    get:
+      tags:
+      - "Comunicaciones SMS"
+      summary: "Obtener comunicacionSMS por ID"
+      description: ""
+      operationId: "getComunicacionSMSId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_comunicacionSMS"
+        in: "path"
+        description: "ID de la configuracion SMS"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "configuracion SMS encontrada"
+          schema:
+              $ref: "#/definitions/ComunicacionesSMS"
+    post:
+      tags:
+      - "Comunicaciones SMS"
+      summary: "Enviar configuracion SMS al equipo"
+      description: ""
+      operationId: "enviarComunicacionSMS"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_comunicacionSMS"
+        in: "path"
+        description: "ID de la configuracion SMS"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto configuracion SMS a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/ComunicacionesSMS"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/ComunicacionesSMS"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/comunicacionespc:
+    get:
+      tags:
+      - "Comunicaciones PC"
+      summary: "Obtener array de comunicaciones PC"
+      description: ""
+      operationId: "getComunicacionesPC"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Configuracion PC encontrada"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ComunicacionesPC"
+  /equipos/{id_equipo}/comunicacionespc/{id_comunicacionPC}:
+    get:
+      tags:
+      - "Comunicaciones PC"
+      summary: "Obtener comunicacionPC por ID"
+      description: ""
+      operationId: "getComunicacionPCId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_comunicacionPC"
+        in: "path"
+        description: "ID de la configuracion PC"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "configuracion PC encontrada"
+          schema:
+              $ref: "#/definitions/ComunicacionesPC"
+    post:
+      tags:
+      - "Comunicaciones PC"
+      summary: "Enviar configuracion PC al equipo"
+      description: ""
+      operationId: "enviarComunicacionPC"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_comunicacionPC"
+        in: "path"
+        description: "ID de la configuracion PC"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto configuracion PC a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/ComunicacionesPC"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/ComunicacionesPC"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/disponibilidad:
+    get:
+      tags:
+      - "Disponibilidad"
+      summary: "Obtener array de Disponibilidad"
+      description: ""
+      operationId: "getDisponibilidad"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Disponibilidad encontrada"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Disponibilidad"
+  /equipos/{id_equipo}/disponibilidad/{id_disponibilidad}:
+    get:
+      tags:
+      - "Disponibilidad"
+      summary: "Obtener disponibilidad por ID"
+      description: ""
+      operationId: "getDisponibilidadId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_disponibilidad"
+        in: "path"
+        description: "ID del hidrante"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Disponibilidad encontrada"
+          schema:
+              $ref: "#/definitions/Disponibilidad"
+    post:
+      tags:
+      - "Disponibilidad"
+      summary: "Enviar disponibilidad al equipo"
+      description: ""
+      operationId: "enviarDisponibilidad"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_disponibilidad"
+        in: "path"
+        description: "ID de la disponibilidad"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto disponibilidad a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/Disponibilidad"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/Hidrantes"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
   /equipos/{id_equipo}/hidrantes:
     get:
       tags:
@@ -2181,7 +2639,408 @@ definitions:
         type: "integer"
         format: "int32"
         description: "tiempo extra que mantiene en movimiento la valvula despues del final de carrera"
-      
+  Disponibilidad:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true   
+      sector:
+        type: "integer"
+        format: "int32" 
+        description: "sector maestro de la disponibilidad"
+      diasRiego:
+        type: "integer"
+        format: "int32"
+        description: "dias seguidos que riega"
+      diasNoRiego:
+        type: "integer"
+        format: "int32"
+        description: "dias seguidos que no riega"
+      periodoInicio:
+        type: "string"
+        format: "date-time"
+        description: "data de inicio del periodo"
+      periodoFin:
+        type: "string"
+        format: "date-time"
+        description: "data fin del periodo"
+      texto:
+        type: "string"
+        description: "nombre descriptivo"
+      condicional1:
+        type: "integer"
+        format: "int32"
+        description: "condicionante de la disponibilidad"
+      condicional2:
+        type: "integer"
+        format: "int32"
+        description: "condicionante de la disponibilidad"
+      condicional3:
+        type: "integer"
+        format: "int32"
+        description: "condicionante de la disponibilidad"
+      condicional4:
+        type: "integer"
+        format: "int32"
+        description: "condicionante de la disponibilidad"
+      condicional5:
+        type: "integer"
+        format: "int32"
+        description: "condicionante de la disponibilidad"
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true 
+      motivoNoRiega:
+        type: "integer"
+        format: "int32"
+        description: "[DISP_PARO_FORA_HORARI, DISP_PARO_SENSE_SALDO, DISP_PARO_SENSE_DOTACIO, DISP_PARO_COND, DISP_PARO_FORA_SERVEI, DISP_PARO_DEF]"
+      xDiasRiego:
+        type: "integer"
+        format: "int32"
+        description: "contador de dias de riego seguidos"
+        readOnly: true
+      xDiasNoRiego:
+        type: "integer"
+        format: "int32"
+        description: "contador de dias No riego seguidos"
+        readOnly: true
+      tiempoDisponible:
+        type: "integer"
+        format: "int32"
+        description: "tiempo que le queda para salir de la disponibilidad"
+        readOnly: true
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      idPrograma:
+        type: "integer"
+        format: "int32"
+  ComunicacionesPC:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true  
+      comPC:
+        type: "integer"
+        format: "int32"
+        description: "[PC_NO, PC_PSEP_RT, PC PSEP RTU RADIO, PC_PSEP_RTU_GSM, PC_PSEP_TCP_GPRS_SOCKET, PC PSEP RDM RADIO]"
+      accesPC:
+        type: "integer"
+        format: "int32"
+        description: "[PC_ACCES_TOTAL, PC_ACCES_PROG, PC_ACCES_CONS]"
+      espDesconexion:
+        type: "integer"
+        format: "int32"
+        description: "tiempo de espera antes de marcar desconexion"
+      horarioInicio:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "hora de inicio en minutos"
+      horarioFinal:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "hora final en minutos"
+      cadencia:
+        type: "string"
+        format: "date-time"
+        description: "cadencia de conexion dentro del horario activo"
+      minutos:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 255
+        description: "minutos que esta conectado"
+      destDirIP1:
+        type: "integer"
+        format: "int32"
+        description: "primer bloque de digitos en la direccion IP ???.xxx.xxx.xxx"
+      destDirIP2:
+        type: "integer"
+        format: "int32"
+        description: "segundo bloque de digitos en la direccion IP xxx.???.xxx.xxx"
+      destDirIP3:
+        type: "integer"
+        format: "int32"
+        description: "tercer bloque de digitos en la direccion IP xxx.xxx.???.xxx"
+      destDirIP4:
+        type: "integer"
+        format: "int32"
+        description: "cuarto bloque de digitos en la direccion IP xxx.xxx.xxx.???"
+      destDirIPT:
+        type: "string"
+        description: "nombre de la direccion IP"
+      destDirTCP:
+        type: "integer"
+        format: "int32"
+        description: "puerto TCP de destino"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+  ComunicacionesSMS:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true   
+      Activo:
+        type: "boolean"
+        default: false
+        description: "activar o desactivar el envio de SMS"
+      limiteSMS:
+        type: "integer"
+        format: "int32"
+        description: "limite de SMS diarios (por defecto 20)"
+      TelefonoA:
+        type: "string"
+        description: "usuario1"
+      TelefonoB:
+        type: "string"
+        description: "usuario2"
+      TelefonoC:
+        type: "string"
+        description: "maquina (otro equipo)"
+      horaInicio:
+        type: "string"
+        format: "date-time"
+      sms1:
+        type: "string"
+        description: "SMS para enviar al telefonoC"
+      sms2:
+        type: "string"
+        description: "SMS para enviar al telefonoC"
+      sms3:
+        type: "string"
+        description: "SMS para enviar al telefonoC"
+      sms4:
+        type: "string"
+        description: "SMS para enviar al telefonoC"
+      sms5:
+        type: "string"
+        description: "SMS para enviar al telefonoC"
+      sms6:
+        type: "string"
+        description: "SMS para enviar al telefonoC"
+      tituloSMS:
+        type: "string"
+        description: "Titula para enviar delante de todos los SMS"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+  OpcionesInstalador:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true 
+      modelo:
+        type: "integer"
+        format: "int32"
+        description: "[AGRBIT_DIN, AGRBIT_CON]"
+      modem:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 1
+        description: "si tiene instalado el modem"
+      agrobee:
+        type: "boolean"
+        default: false
+        description: "si tiene instalado Agrobee"
+      radio:
+        type: "integer"
+        format: "int32"
+        description: "[RM_CAP, RM_433, RM_868]"
+      wifi:
+        type: "boolean"
+        default: false
+        description: "si tiene instalado WIFI"
+      entradaAnalogicaBase:
+        type: "integer"
+        format: "int32"
+        description: "[EA_4_20mA, EA_0_20V]"
+      hayBateria:
+        type: "boolean"
+        default: true
+        description: "si tiene bateria interna"
+      horarioVeranoInvierno:
+        type: "boolean"
+        default: true
+        description: "si cambia automaticamente el horario"
+      idioma:
+        type: "integer"
+        format: "int32"
+        description: "[IDIOMA_ESPANYOL, IDIOMA_ANGLES, IDIOMA_FRANCES, IDIOMA_ITALIA, IDIOMA_PORTUGUES, IDIOMA_CATALA]"
+      codigoSMS:
+        type: "integer"
+        format: "int32"
+        description: "codigo de los SMS"
+      codigoParametros:
+        type: "integer"
+        format: "int32"
+        description: "codigo de los Parametros"
+      codigoFunciones:
+        type: "integer"
+        format: "int32"
+        description: "codigo de las Funciones"
+      longitud:
+        type: "number"
+        format: "float"
+        description: "coordenada geografica"
+        readOnly: true
+      latitud:
+        type: "number"
+        format: "float"
+        description: "coordenada geografica"
+        readOnly: true
+      modificadoOpcionEquipo:
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+      fechaModificadoOpcionEquipo:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      modificadoOpcionInstalador:
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+      fechaModificadoOpcioninstalador:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      agrobeeL:
+        type: "boolean"
+        default: false
+        description: "si tiene instalado Agrobee-L"
+  ConsultaAgronic:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true   
+      estado: 
+        type: "integer"
+        format: "int32"
+        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+        default: 0
+        readOnly: true  
+      progActivos:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        description: "numero de programas activos"
+        readOnly: true
+      anomaliasNuevas:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        description: "numero total de anomalias nuevas"
+        readOnly: true
+      dataEquipo:
+        type: "string"
+        format: "date-time"
+        description: "hora y fecha del equipo "
+        readOnly: true
+      tensionVcc:
+        type: "integer"
+        format: "int32"
+        description: "tension de alimentacion del agronic en mV"
+        readOnly: true
+      tensionVBat:
+        type: "integer"
+        format: "int32"
+        description: "tension de la bateria interna en mV"
+      cargaBat:
+        type: "integer"
+        format: "int32"
+        description: "% de carga de la bateria interna"
+      paroDefinitivo:
+        type: "boolean"
+        description: "true, tiene algun programa en paro definitivo"
+      usuariosConectados:
+        type: "integer"
+        format: "int32"
+        description: "b0=usuario1, b1=usuario2, b3=usiuario3"
+      manualActivo:
+        type: "integer"
+        format: "int32"
+        description: "si tiene algun programa o sector en manual"
+        
   ApiResponse:
     type: "object"
     properties:
@@ -2214,3 +3073,5 @@ definitions:
         description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
         default: 0
         readOnly: true  
+      texto:
+        type: "string"
