@@ -39,10 +39,117 @@ tags:
   description: "--"
 - name: "Consulta Agronic"
   description: "--"
+- name: "Comunicaciones Instalador"
+  description: "--"
 
 schemes:
 - "https"
 paths:
+  /equipos/{id_equipo}/comunicacionesinstalador:
+    get:
+      tags:
+      - "Comunicaciones Instalador"
+      summary: "Obtener Comunicaciones Instalador"
+      description: ""
+      operationId: "getComunicacionesInstalador"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Comunicaciones Instalador encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ComunicacionesInstalador"
+  /equipos/{id_equipo}/comunicacionesinstalador/{id_comunicacionesInstalador}:
+    get:
+      tags:
+      - "Comunicaciones Instalador"
+      summary: "Obtener Comunicaciones Instalador por ID"
+      description: ""
+      operationId: "getComunicacionesInstaladorId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_comunicacionesInstalador"
+        in: "path"
+        description: "ID de las comunicaciones de instalador"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "comunicaciones instaldor encontradas"
+          schema:
+              $ref: "#/definitions/ComunicacionesInstalador"
+    post:
+      tags:
+      - "Comunicaciones Instalador"
+      summary: "Enviar comunicaciones instalador al equipo"
+      description: ""
+      operationId: "enviarComunicacionesInstalador"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_comunicacionesInstalador"
+        in: "path"
+        description: "ID de la comunicaciones instaldor"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto comunicaciones instaldor a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/ComunicacionesInstalador"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/ComunicacionesInstalador"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
   /equipos/{id_equipo}/consultaagronic:
     get:
       tags:
@@ -2978,6 +3085,193 @@ definitions:
         type: "boolean"
         default: false
         description: "si tiene instalado Agrobee-L"
+  ComunicacionesInstalador:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true 
+      rm433Canal:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 99
+        description: "canal del radio modem"
+      rm433HoraInicio:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "Hora de inicio en minutos"
+      rm433HoraFin:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "Hora final en minutos"
+      rm433Cadencia:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 65535
+        description: "Cadencia de comunicacion dentro del horario activo (hh:mm)"
+      rm433Minutos:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 255
+        description: "minutos que estara conectado"
+      apn:
+        type: "string"
+        description: "acces point net"
+      apmUsuario:
+        type: "string"
+        description: "GPRS: usuario"
+      apnPassword:
+        type: "string"
+        description: "GPRS: password"
+      apnAutomatico:
+        type: "boolean"
+        default: true
+        description: "true, detecta automaticamente los APN de la SIM"
+      gprsLlamada:
+        type: "boolean"
+        default: false
+        description: "true, conecta el modem GPRS cuando detecta una llamada"
+      gprsLimite:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999
+        description: "Limite de datos mensuales (0, no realiza aviso)"
+      gprsHoraInicio:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "hora de inicio en minutos"
+      gprsHoraFin:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "hora fin en minutos"
+      gprsCadencia:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 65535
+        description: "Cadencia de comunicacion dentro del horario activo en minutos"
+      gprsMinutos:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 255
+        description: "minutos que estara conectado"
+      gprsDiaInicio:
+        type: "integer"
+        format: "int32"
+        description: "Dia que considera final de mes para ralizar el calculo mensual de datos"
+      wifiNombe:
+        type: "string"
+        description: "nombre de la red (SSDI)"
+      wifiPassword:
+        type: "string"
+        description: "password de la red wifi"
+      WifiSeguridad:
+        type: "integer"
+        format: "int32"
+        description: "tipo de seguridad []"
+      WifiHoraInicio:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "hora de inicio en minutos"      
+      WifiHoraFin:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 1440
+        description: "hora fin en minutos"
+      WifiCadencia:
+        type: "string"
+        format: "date-time"
+        minimum: 0
+        maximum: 65535
+        description: "Cadencia de comunicacion dentro del horario activo en minutos"
+      WifiMinutos:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 255
+        description: "minutos que estara conectado"
+      psepCadenciaA:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999
+        default: 15
+        description: "tiempo entre enviamientos de la cadadencia A"
+      psepCadenciaB:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 9999
+        default: 15
+        description: "tiempo entre enviamientos de la cadadencia B"
+      modificadoRM433:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      fechaModificadoRM433:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      modificadoMDM:
+        type: "integer"
+        format: "int32"
+        readOnly: true 
+      fechaModificadoMDM:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      modificadoPSEP:
+        type: "integer"
+        format: "int32"
+      fechaModificadoPSEP:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      modificadoEventos:
+        type: "integer"
+        format: "int32"
+        readOnly: true 
+      fechaModificadoEventos:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      modificadoWifi:
+        type: "integer"
+        format: "int32"
+        readOnly: true 
+      fechaModificadoWifi:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+      gprsTipoModem:
+        type: "integer"
+        format: "int32"
+        description: "[MDM_CAP, MDM_INTERN, MDM_EXTERN]"
   ConsultaAgronic:
     type: "object"
     properties:
