@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "."
+  description: "Swagger API for Comunitats"
   version: "1.0.0"
   title: "AGRONIC BIT NET API"
   termsOfService: ""
