@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Swagger API for Comunitats"
+  description: "."
   version: "1.0.0"
   title: "AGRONIC BIT NET API"
   termsOfService: ""
@@ -41,10 +41,305 @@ tags:
   description: "--"
 - name: "Comunicaciones Instalador"
   description: "--"
-
+- name: "Salidas Digitales"
+  description: "--"
+- name: "Coordinadores"
+  description: "--"
+- name: "Formato Sensores"
+  description: "--" 
+- name: "Horarios Disponibilidad"
+  description: "--" 
 schemes:
 - "https"
 paths:
+  /equipos/{id_equipo}/horariosdisponibilidad:
+    get:
+      tags:
+      - "Horarios Disponibilidad"
+      summary: "Obtener Horarios Disponibilidad"
+      description: ""
+      operationId: "getHorariosDisponibilidad"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Horarios Dispinibilidad Encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/HorariosDisponibilidad"
+    post:
+        tags:
+        - "Horarios Disponibilidad"
+        summary: "Horarios Disponibilidad"
+        description: ""
+        operationId: "postHorariosDisponibilidad"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Objeto Horarios Disponibilidad a eviar"
+          required: true
+          schema:
+            $ref: "#/definitions/HorariosDisponibilidad"
+            type: "object"
+        responses:
+          "200":
+            description: "Guardado correcto"
+            schema: 
+              items: 
+                $ref: "#/definitions/HorariosDisponibilidad"
+          "405":
+            description: "Invalid input"
+          "403":
+            description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/formatosensores:
+    get:
+      tags:
+      - "Formato Sensores"
+      summary: "Obtener Formato Sensores"
+      description: ""
+      operationId: "getFormatoSensores"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Formato Sensores Encontrado"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/FormatoSensores"
+  /equipos/{id_equipo}/formatosensores/{id_formatosensores}:
+    get:
+      tags:
+      - "Formato Sensores"
+      summary: "Obtener Formato Sensores por ID"
+      description: ""
+      operationId: "getFormatoSensoresId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_formatosensores"
+        in: "path"
+        description: "ID de los Formato Sensores"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Formato Sensores encontrados"
+          schema:
+              $ref: "#/definitions/FormatoSensores"
+    post:
+      tags:
+      - "Formato Sensores"
+      summary: "Enviar formato sensores al equipo"
+      description: ""
+      operationId: "enviarFormatoSensores"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_formatosensores"
+        in: "path"
+        description: "ID de los formatos sensores"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto formato sensores a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/FormatoSensores"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/FormatoSensores"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/coordinadores:
+    get:
+      tags:
+      - "Coordinadores"
+      summary: "Obtener Coordinadores"
+      description: ""
+      operationId: "getCoordinadores"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Coordinadores encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Coordinadores"
+    post:
+        tags:
+        - "Coordinadores"
+        summary: "Coordinadores"
+        description: ""
+        operationId: "postCoordinadores"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Objeto coordinadoress a eviar"
+          required: true
+          schema:
+            $ref: "#/definitions/Coordinadores"
+            type: "object"
+        responses:
+          "200":
+            description: "Guardado correcto"
+            schema: 
+              items: 
+                $ref: "#/definitions/Coordinadores"
+          "405":
+            description: "Invalid input"
+          "403":
+            description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/salidasdigitales:
+    get:
+      tags:
+      - "Salidas Digitales"
+      summary: "Obtener Salidas Digitales"
+      description: ""
+      operationId: "getSalidasDigitales"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Salidas Digitales encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SalidasDigitales"
+    post:
+        tags:
+        - "Salidas Digitales"
+        summary: "Configuracion de las salidas"
+        description: ""
+        operationId: "postSalidasDigitales"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Objeto salidas digitales a eviar"
+          required: true
+          schema:
+            $ref: "#/definitions/SalidasDigitales"
+            type: "object"
+        responses:
+          "200":
+            description: "Guardado correcto"
+            schema: 
+              items: 
+                $ref: "#/definitions/SalidasDigitales"
+          "405":
+            description: "Invalid input"
+          "403":
+            description: "Sin acceso al equipo"
   /equipos/{id_equipo}/comunicacionesinstalador:
     get:
       tags:
@@ -861,7 +1156,7 @@ paths:
         type: "integer"
         maximum: 20
         minimum: 1
-        format: "int32"
+        format: "int32" 
       responses:
         "405":
           description: "Invalid input"
@@ -3334,7 +3629,207 @@ definitions:
         type: "integer"
         format: "int32"
         description: "si tiene algun programa o sector en manual"
-        
+  SalidasDigitales:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true  
+      tipoLatch:
+        type: "integer"
+        format: "int32"
+        description: "[LATCH_2F, LATCH_3F, LATCH_2F_INV]"
+      TensionLatch:
+        type: "integer"
+        format: "int32"
+        description: "[12V, 22V, 6V, 9V]"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
+        type: "string"
+        format: "date-time"
+        readOnly: true 
+  Coordinadores:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificador unico del objeto"
+          readOnly: true
+        idEquipo:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificdor del equipo"
+          readOnly: true 
+        canal:
+          type: "integer"
+          format: "int32"
+          minimum: 1
+          maximum: 16
+          default: 5
+          description: "canal de comunicacion"
+        codigoRed:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 65535
+          description: "red de comunicacion"
+        TiempoComunica:
+          type: "integer"
+          format: "int32"
+          minimum: 10
+          maximum: 300
+          default: 60
+          description: "cadencia de comunicacion con los Agrobee's"
+        modificado: 
+          type: "integer"
+          format: "int32"
+          description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+          default: 0
+          readOnly: true
+        fechaModificado:
+          type: "string"
+          format: "date-time"
+          readOnly: true       
+        estado: 
+          type: "integer"
+          format: "int32"
+          description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+          default: 0
+          readOnly: true
+        versionSW:
+          type: "integer"
+          format: "int32"
+          description: "version de software (0.00)"
+        idCajaEnlace:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        tipoCaja:
+          type: "integer"
+          format: "int32"
+          default: 11
+          description: "[10=ABEE, 11=AGROBEE-L]"
+        banda:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "[LORA_BAND_868, LORA_BAND_433]"
+        modoTX:
+          type: "integer"
+          format: "int32"
+          minimum: 1
+          maximum: 18
+          default: 5
+          description: "modo de transmisión"
+        tipoCoordinador:
+          type: "integer"
+          format: "int32"
+          description: "[LORA_868, LORA_915]"
+  FormatoSensores:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificador unico del objeto"
+          readOnly: true
+        idEquipo:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificdor del equipo"
+          readOnly: true 
+        unidades:
+          type: "string"
+        decimales:
+          type: "integer"
+          format: "int32"
+        enteros:
+          type: "integer"
+          format: "int32"
+        signo:
+          type: "boolean"
+        pr1:
+          type: "integer"
+          format: "int32"
+          description: "valor real 1 en mV"
+        pl1:
+          type: "integer"
+          format: "int32"
+          description: "valor logico 1"
+        pr2:
+          type: "integer"
+          format: "int32"
+          description: "valor real 2 en mV"
+        pl2:
+          type: "integer"
+          format: "int32"
+          description: "valor logico 2"
+        pr3:
+          type: "integer"
+          format: "int32"
+          description: "valor real 3 en mV"
+        pl3:
+          type: "integer"
+          format: "int32"
+          description: "valor logico 3"
+        pr4:
+          type: "integer"
+          format: "int32"
+          description: "valor real 4 en mV"
+        pl4:
+          type: "integer"
+          format: "int32"
+          description: "valor logico 4"
+  HorariosDisponibilidad:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificador unico del objeto"
+          readOnly: true
+        idEquipo:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificdor del equipo"
+          readOnly: true
+        activo:
+          type: "boolean"
+          default: "false"
+          description: "dia activo o no"
+        horaInicio:
+          type: "string"
+          format: "date-time"
+          minimum: 0
+          maximum: 1439
+          description: "hora de inicio en minutos"
+        horaFin:
+          type: "string"
+          format: "date-time"
+          minimum: 0
+          maximum: 1439
+          description: "hora final en minutos"
   ApiResponse:
     type: "object"
     properties:
