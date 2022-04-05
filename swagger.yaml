@@ -49,9 +49,590 @@ tags:
   description: "--" 
 - name: "Horarios Disponibilidad"
   description: "--" 
+- name: "Lecturas Registro"
+  description: "--"
+- name: "Configuraciones ABEE"
+  description: "--"
+- name: "Modulos ABEE"
+  description: "--"
+- name: "Entradas Salidas ABEE"
+  description: "--"
+- name: "Configuracion LORA"
+  description: "--"
+- name: "Modulos LORA"
+  description: "--"
 schemes:
 - "https"
 paths:
+  /equipos/{id_equipo}/modulosLORA:
+    get:
+      tags:
+      - "Modulos LORA"
+      summary: "Modulos LORA"
+      description: ""
+      operationId: "getModulosLORA"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Configuracion LORA encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ModulosLORA"
+  /equipos/{id_equipo}/modulosLORA/{id_modulosLORA}:
+    get:
+      tags:
+      - "Modulos LORA"
+      summary: "Obtener Modulos LORA por ID"
+      description: ""
+      operationId: "getModulosLORAId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_modulosLORA"
+        in: "path"
+        description: "ID de Modulos LORA"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Modulos LORA"
+          schema:
+              $ref: "#/definitions/ModulosLORA"
+    post:
+      tags:
+      - "Modulos LORA"
+      summary: "Enviar Modulos LORA al equipo"
+      description: ""
+      operationId: "enviarModulosLORA"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_modulosLORA"
+        in: "path"
+        description: "ID de Modulos LORA LORA"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto Modulos LORA a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/ModulosLORA"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/ModulosLORA"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/configuracionLORA:
+    get:
+      tags:
+      - "Configuracion LORA"
+      summary: "Configuracion LORA"
+      description: ""
+      operationId: "getConfiguracionLORA"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Configuracion LORA encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ConfiguracionLORA"
+  /equipos/{id_equipo}/configuracionLORA/{id_configuracionLORA}:
+    get:
+      tags:
+      - "Configuracion LORA"
+      summary: "Obtener Configuracion LORA por ID"
+      description: ""
+      operationId: "getConfiguracionLORAId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_configuracionLORA"
+        in: "path"
+        description: "ID de Configuracion LORA"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Configuracion LORA"
+          schema:
+              $ref: "#/definitions/ConfiguracionLORA"
+    post:
+      tags:
+      - "Configuracion LORA"
+      summary: "Enviar Configuracion LORA al equipo"
+      description: ""
+      operationId: "enviarConfiguracionLORA"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_configuracionLORA"
+        in: "path"
+        description: "ID de las Configuraciones LORA"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto Configuracion LORA a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/ConfiguracionLORA"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/ConfiguracionLORA"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/entradassalidasABEE:
+    get:
+      tags:
+      - "Entradas Salidas ABEE"
+      summary: "Entradas Salidas ABEE"
+      description: ""
+      operationId: "getEntradasSalidasABEE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Entradas Salidas ABEE encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EntradasSalidasABEE"
+  /equipos/{id_equipo}/entradassalidasABEE/{id_entradassalidasABEE}:
+    get:
+      tags:
+      - "Entradas Salidas ABEE"
+      summary: "Obtener Entradas Salidas ABEE por ID"
+      description: ""
+      operationId: "getEntradasSalidasABEEId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_entradassalidasABEE"
+        in: "path"
+        description: "ID de los modulos ABEE"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Entradas Salidas ABEE"
+          schema:
+              $ref: "#/definitions/EntradasSalidasABEE"
+    post:
+      tags:
+      - "Entradas Salidas ABEE"
+      summary: "Enviar Entradas Salidas ABEE al equipo"
+      description: ""
+      operationId: "enviarEntradasSalidasABEE"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_entradassalidasABEE"
+        in: "path"
+        description: "ID de las entradas salidas ABEE"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto Entradas Salidas ABEE a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/EntradasSalidasABEE"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/EntradasSalidasABEE"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/modulosABEE:
+    get:
+      tags:
+      - "Modulos ABEE"
+      summary: "Obtener Modulos ABEE"
+      description: ""
+      operationId: "getModulosABEE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Modulos ABEE encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ModulosABEE"
+  /equipos/{id_equipo}/modulosABEE/{id_modulosABEE}:
+    get:
+      tags:
+      - "Modulos ABEE"
+      summary: "Obtener Modulos ABEE por ID"
+      description: ""
+      operationId: "getModulosABEEId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_modulosABEE"
+        in: "path"
+        description: "ID de los modulos ABEE"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Modulos ABEE encontrados"
+          schema:
+              $ref: "#/definitions/ModulosABEE"
+    post:
+      tags:
+      - "Modulos ABEE"
+      summary: "Enviar Modulos ABEE al equipo"
+      description: ""
+      operationId: "enviarModulosABEE"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_modulosABEE"
+        in: "path"
+        description: "ID de los modulos ABEE"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto Modulos ABEE a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/ModulosABEE"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/ModulosABEE"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/configuracionesABEE:
+    get:
+      tags:
+      - "Configuraciones ABEE"
+      summary: "Obtener Configuraciones ABEE"
+      description: ""
+      operationId: "getConfiguracionesABEE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Configuraciones ABEE encontradas"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ConfiguracionesABEE"
+  /equipos/{id_equipo}/configuracionesABEE/{id_configuracionesABEE}:
+    get:
+      tags:
+      - "Configuraciones ABEE"
+      summary: "Obtener Configuraciones ABEE por ID"
+      description: ""
+      operationId: "getConfiguracionesABEEId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_configuracionesABEE"
+        in: "path"
+        description: "ID de las comunicaciones de instalador"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Configuraciones ABEE encontradas"
+          schema:
+              $ref: "#/definitions/ConfiguracionesABEE"
+    post:
+      tags:
+      - "Configuraciones ABEE"
+      summary: "Enviar Configuraciones ABEE al equipo"
+      description: ""
+      operationId: "enviarConfiguracionesABEE"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_equipo"
+        in: "path"
+        description: "ID del equipo"
+        required: true
+        type: "integer"
+        maximum: 99999
+        minimum: 1
+        format: "int64"
+      - name: "id_configuracionesABEE"
+        in: "path"
+        description: "ID de la comunicaciones instaldor"
+        required: true
+        type: "integer"
+        maximum: 20
+        minimum: 1
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "Objeto Configuraciones ABEE a enviar"
+        required: true
+        schema:
+          $ref: "#/definitions/ConfiguracionesABEE"
+      responses:
+        "200":
+          description: "Guardado correcto"
+          schema:
+            items:
+              $ref: "#/definitions/ConfiguracionesABEE"
+        "405":
+          description: "Invalid input"
+        "403":
+          description: "Sin acceso al equipo"
+  /equipos/lecturasregistros:
+    get:
+      tags:
+      - "Lecturas Registro"
+      summary: "Obtener Horarios Disponibilidad"
+      description: ""
+      operationId: "getLecturasRegistros"
+      produces:
+      - "application/json"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: "Lecturas Registros Encontrados"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/LecturasRegistro"
+    post:
+        tags:
+        - "Lecturas Registro"
+        summary: "Lecturas Registros"
+        description: ""
+        operationId: "postLecturasRegistro"
+        consumes:
+        - "application/json"
+        parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto Horarios Disponibilidad a eviar"
+          required: true
+          schema:
+            $ref: "#/definitions/LecturasRegistro"
+            type: "object"
+        responses:
+          "200":
+            description: "Guardado correcto"
+            schema: 
+              items: 
+                $ref: "#/definitions/LecturasRegistro"
+          "405":
+            description: "Invalid input"
+          "403":
+            description: "Sin acceso al equipo"
   /equipos/{id_equipo}/horariosdisponibilidad:
     get:
       tags:
@@ -1156,7 +1737,7 @@ paths:
         type: "integer"
         maximum: 20
         minimum: 1
-        format: "int32" 
+        format: "int32"
       responses:
         "405":
           description: "Invalid input"
@@ -3830,22 +4411,244 @@ definitions:
           minimum: 0
           maximum: 1439
           description: "hora final en minutos"
-  ApiResponse:
+  LecturasRegistro:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificador unico del objeto"
+          readOnly: true
+        numero: 
+          type: "integer"
+          format: "int32"
+          minimum: 1
+          maximum: 254
+          description: "enumerat de TIPUS_REGISTRES_BIT[ ID:int,         Descripcion: string]"
+          readOnly: true
+        registro:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        tipo:
+          type: "integer"
+          format: "int32"
+          description: "[0-REG_ANOMALIA, 1-REG_ACTUACIO, 2-REG_INTERN, 3-REG_HISTORIAL]"
+          readOnly: true
+        valor1:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        valor2:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        valor3:
+          type: "integer"
+          readOnly: true
+        valor4:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        valor5:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        valor6:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        valor7:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        valor8:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        valor9:
+          type: "integer"
+          format: "int32"
+          readOnly: true
+        fecha:
+          type: "string"
+          format: "date-time"
+          description: "5bytes, yyyy/m/d/hh/mm para indicar las fechas a mirar los registros "
+        fechaRecepcion:
+          type: "string"
+          format: "date-time"
+          readOnly: true  
+        confirmada:
+          type: "boolean"
+          readOnly: true
+        analizado:
+          type: "boolean"
+          readOnly: true
+        modificadoRmt:
+          type: "integer"
+          format: "integer32"
+          readOnly: true
+        registroTractable:
+          type: "integer"
+          format: "int32"
+  ConfiguracionesABEE:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificador unico del objeto"
+          readOnly: true
+        idEquipo:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificdor del equipo"
+          readOnly: true 
+        accionError:
+          type: "integer"
+          format: "int32"
+          default: 0
+          description: "[0=no hace nada, 1=para inmediatamente, 2=para a los 15min"
+        tieneSensor1:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tieneSensor2:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tieneSensor3:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tieneSensor4:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tipoSensor:
+          type: "integer"
+          format: "int32"
+          description: "depende del tipo de modulo [3MA: 0=4-2mA, 1=0-20V], [ SDI: 0=5TE, 1=GS3, 2=CS650 Cambell, 3=Hidraprobe II], [H2O: 0=decagon, 1=Watermark, 2=Solfranc, 3=LWS], [DENTROMETRO:  0=15mm, 1=11mm, 2=25mm] "
+        tipoTerreno:
+          type: "integer"
+          format: "int32"
+          description: "[H2O{Mineral, Mantillo}, SDI-Aquacheck{Mineral, Mantillo,Lana roca, Perlita, Turba, Fibra coco}, SDI- R{Mineral, Arenoso, Arcilla, Arenoso-marga, Marga, Arcilla-marga}]"
+        tiempoLectura:
+          type: "integer"
+          format: "int32"
+          minimum: 5
+          maximum: 60
+          default: 5
+          description: "cadenciad de lectura (5' a 60')"
+        vccSensor:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 1
+          default: 1
+          description: "tension de alimentacion (0=5V 1=12V)"
+        generalModulo:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 1
+          default: 0
+          description: "si los modulos 9sd o 6sd tienen la ultima salida como general de las primeras (0=no 1=si)"
+        tensionLatch:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 3
+          default: 0
+          description: "nivel de tension en las salidas (0=12V, 1=16V, 2=6V, 3=9V)"
+        tipoLatch:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 2
+          default: 0
+          description: "0=2hilos, 1=3hilos, 2=2hilos Inv"
+        modificado: 
+          type: "integer"
+          format: "int32"
+          description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+          default: 0
+          readOnly: true
+        fechaModificado:
+          type: "string"
+          format: "date-time"
+          readOnly: true 
+        formatoLecturas:
+          type: "integer"
+          format: "int32"
+        densidadAparente1:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        densidadAparente2:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        densidadAparente3:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        densidadAparente4:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        anchoCanal:
+          type: "integer"
+          format: "int32"
+          description: "[1, 2, 3, 6, 9, 12, 18, 24, 30, 36, 48, 60, 72, 84, 96, 120, 144, 180, 240, 300, 360, 480, 600]"
+        altoCanal:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 9998
+          description: "distancia del sensor al fondo del canal (0 a 9998mm)"
+        foramtoCaudal:
+          type: "integer"
+          format: "int32"
+          description: "[000.00m3/h, 0000.0m3/h, 00000m3/h, 000.00m3/s, 0000.0m3/s, 00000m3/s, 000.00l/s, 0000.0l/s, 00000l/s, 000.00GPM, 0000.0 GPM, 00000 GPM]"
+  ModulosABEE:
     type: "object"
     properties:
-      code:
+      id:
         type: "integer"
         format: "int32"
         default: 1
+        description: "identificador unico del objeto"
         readOnly: true
-      type:
-        type: "string"
-      message:
-        type: "string"
-      Date:
-        type: "string"
-        format: "date-time"
-        description: "Fecha y hora para enviar al equipo (DD/MM/yyyy HH:mm)"
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true   
+      numeroSerie:
+        type: "integer"
+        format: "int32"
+      tipo:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "[ABEE_TIP_COORD, ABEE_TIP_ROUTER]"
+      modelo:
+        type: "integer"
+        format: "int32"
+        description: "[2SD, 8SD, H2O, RPT, SDI, 3MA, 2SD_2ED_1EA, 9SD_6SD_2EA, 6SD_6ED_2EA, 3LV, DENDROMETRO, WATERMARK, PARSALL]"
       modificado: 
         type: "integer"
         format: "int32"
@@ -3855,12 +4658,437 @@ definitions:
       fechaModificado:
         type: "string"
         format: "date-time"
-        readOnly: true       
-      estado: 
+        readOnly: true  
+      estado:
         type: "integer"
         format: "int32"
-        description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
-        default: 0
+        description: "[COMU_NO_CONF, COMU_TANCADA, COMU_OBERTA, COMU_ERROR, COMU_OBRINT, COMU_TANCANT, COMU_MDM_NO_SIM, COMU_NO_VCC, COMU_MDM_PIN, COMU_WIFI_NO_MARXA, COMU_SMS_NO_SERVEI, COMU_MDM_PUK]"
+        readOnly: true
+      versionSW:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      vBat:
+        type: "number"
+        format: "float"
+        readOnly: true
+      vSol:
+        type: "number"
+        format: "float"
+        readOnly: true
+      rssi:
+        type: "integer"
+        format: "int32"
+      lqi:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      idModulo:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+  EntradasSalidasABEE:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
         readOnly: true  
-      texto:
+      tipoES:
+        type: "integer"
+        format: "int32"
+        description: "[ABEE_SD_NORMAL, ABEE_SD_SECTOR, ABEE_SD_GENERAL]"
+      numeroES:
+        type: "integer"
+        format: "int32"
+      tensionLatch:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 3
+        default: 0
+        description: "[0=12V, 1=16V, 2=6V, 3=9V]"
+      tipoLatch:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 2
+        default: 0
+        description: "[0=2f, 1=3f, 2=2f.inv]"
+      tieneSensor:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 1
+        default: 0
+        description: "[0=NO, 1=SI]"
+      tipoSensor:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 1
+        default: 0
+        description: "[0=4-20mA, 1=0-20V]"
+      alturaMax:
+        type: "number"
+        format: "float"
+      superficie:
+        type: "number"
+        format: "float"
+  ModulosLORA:
+    type: "object"
+    description: "solo para modelos BIT-CON"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificador unico del objeto"
+        readOnly: true
+      idEquipo:
+        type: "integer"
+        format: "int32"
+        default: 1
+        description: "identificdor del equipo"
+        readOnly: true   
+      numeroSerie:
+        type: "integer"
+        format: "int32"
+      tipo:
+        type: "integer"
+        format: "int32"
+        default: 0
+        description: "[LORA-868, LORA-915]"
+      modelo:
+        type: "integer"
+        format: "int32"
+        description: "[LORA_M_NO_CONF, LORA_M_2SD, LORA_M_8SD, LORA_M_H2O, LORA_M_SDI, LORA_M_3MA, LORA_M_2SD_2ED_1EA, LORA_M_9SD_2ED_2EA, LORA_M_6SD_6ED_2EA, LROA_M_3LV, LORA_M_DENDROMETRE, LORA_M_WATERMARK, LORA_M_PARSHALL, LORA_M_GNSS, LORA_M_NUTRI]"
+      modificado: 
+        type: "integer"
+        format: "int32"
+        description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+        default: 0
+        readOnly: true
+      fechaModificado:
         type: "string"
+        format: "date-time"
+        readOnly: true  
+      estado:
+        type: "integer"
+        format: "int32"
+        description: "[]"
+        readOnly: true
+      versionSW:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      vBat:
+        type: "number"
+        format: "float"
+        readOnly: true
+      vSol:
+        type: "number"
+        format: "float"
+        readOnly: true
+      rssi:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 100
+        description: "nivel de señal en %"
+        readOnly: true
+      lqi:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 100
+        description: "nivel de señal en %"
+        readOnly: true
+      marcadores:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      estadoSalidasDigitales:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+      idModulo:
+        type: "integer"
+        format: "int32"
+        readOnly: true
+  ConfiguracionLORA:
+      type: "object"
+      description: "solo para modelos BIT-CON"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificador unico del objeto"
+          readOnly: true
+        idEquipo:
+          type: "integer"
+          format: "int32"
+          default: 1
+          description: "identificdor del equipo"
+          readOnly: true 
+        tieneSensor1:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tieneSensor2:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tieneSensor3:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tieneSensor4:
+          type: "boolean"
+          default: false
+          description: "[false= no hay sensor, true=si hay sensor]"
+        tipoSensor:
+          type: "integer"
+          format: "int32"
+          description: "depende del tipo de modulo [3MA: 0=4-2mA, 1=0-20V], [ SDI: 0=5TE, 1=GS3, 2=CS650 Cambell, 3=Hidraprobe II], [H2O: 0=decagon, 1=Watermark, 2=Solfranc, 3=LWS], [DENTROMETRO:  0=15mm, 1=11mm, 2=25mm] "
+        tipoTerreno:
+          type: "integer"
+          format: "int32"
+          description: "[H2O{Mineral, Mantillo}, SDI-Aquacheck{Mineral, Mantillo,Lana roca, Perlita, Turba, Fibra coco}, SDI- R{Mineral, Arenoso, Arcilla, Arenoso-marga, Marga, Arcilla-marga}]"
+        tiempoLectura:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 2
+          default: 0
+          description: "cadenciad de lectura (0=5', 1=10', 2=20')"
+        vccSensor:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 1
+          default: 1
+          description: "tension de alimentacion (0=5V 1=12V)"
+        accionError:
+          type: "integer"
+          format: "int32"
+          default: 0
+          description: "[0=no hace nada, 1=para inmediatamente, 2=para a los 15min"
+        generalModulo:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 1
+          default: 0
+          description: "si los modulos 9sd o 6sd tienen la ultima salida como general de las primeras (0=no 1=si)"
+        tensionLatch:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 3
+          default: 0
+          description: "nivel de tension en las salidas (0=12V, 1=16V, 2=6V, 3=9V)"
+        tipoLatch:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 2
+          default: 0
+          description: "0=2hilos, 1=3hilos, 2=2hilos Inv"
+        modificado: 
+          type: "integer"
+          format: "int32"
+          description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+          default: 0
+          readOnly: true
+        fechaModificado:
+          type: "string"
+          format: "date-time"
+          readOnly: true 
+        formatoLecturas:
+          type: "integer"
+          format: "int32"
+          description: "[000.00m3/h, 0000.0m3/h, 00000m3/h, 000.00m3/s, 0000.0m3/s, 00000m3/s, 000.00l/s, 0000.0l/s, 00000l/s, 000.00GPM, 0000.0 GPM, 00000 GPM]"
+        alturaMax1:
+          type: "integer"
+          format: "int32"
+        alturaMax2:
+          type: "integer"
+          format: "int32"
+        alturaMax3:
+          type: "integer"
+          format: "int32"
+        superficie1:
+          type: "integer"
+          format: "int32"
+        superficie2:
+          type: "integer"
+          format: "int32"
+        superficie3:
+          type: "integer"
+          format: "int32"
+        densidadAparente1:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        densidadAparente2:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        densidadAparente3:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        densidadAparente4:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 256
+          description: "desidad del sensor (0.00 a 2.65)"
+        anchoCanal:
+          type: "integer"
+          format: "int32"
+          description: "[1, 2, 3, 6, 9, 12, 18, 24, 30, 36, 48, 60, 72, 84, 96, 120, 144, 180, 240, 300, 360, 480, 600]"
+        altoCanal:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 9998
+          description: "distancia del sensor al fondo del canal (0 a 9998mm)"
+        tipoPivot:
+          type: "integer"
+          format: "int32"
+          minimum: 0
+          maximum: 1
+          default: 0
+          description: "0=circular, 1=lineal"
+        litudPuntoCentral:
+          type: "integer"
+          format: "int32"
+        longitudPuntoCentral:
+          type: "integer"
+          format: "int32"
+        paroSectores:
+          type: "integer"
+          format: "int32"
+        cadenciaLEA1:
+          type: "integer"
+          format: "int32"
+          description: "[0=5’, 1=10’, 2=20’, 3= igual que comunicación]"
+        cadenciaLEA2:
+          type: "integer"
+          format: "int32"
+          description: "[0=5’, 1=10’, 2=20’, 3= igual que comunicación]"
+        cadenciaLEA3:
+          type: "integer"
+          format: "int32"
+          description: "[0=5’, 1=10’, 2=20’, 3= igual que comunicación]"
+        tensionSensor2:
+          type: "integer"
+          format: "int32"
+          description: "[0=5V, 1=12V]"
+        tensionSensor3:
+          type: "integer"
+          format: "int32"
+          description: "[0=5V, 1=12V]"
+        tiempoLVcc1:
+          type: "integer"
+          format: "int32"
+          description: "[0=250ms, 1=500ms, 2=1s, 3=2s]" 
+        tiempoLVcc2:
+          type: "integer"
+          format: "int32"
+          description: "[0=250ms, 1=500ms, 2=1s, 3=2s]"
+        tiempoLVcc3:
+          type: "integer"
+          format: "int32"
+          description: "[0=250ms, 1=500ms, 2=1s, 3=2s]"
+        nivelesSentek:
+          type: "integer"
+          format: "int32"
+          description: "[0=3, 1=6, 2=9, 3=12]"
+        nutriCoeficiente1NitratoS1:
+          type: "integer"
+          format: "int32"
+        NutriCoeficiente2NitratoS1:
+          type: "integer"
+          format: "int32"
+        NutriCoeficiente1PotasioS1:
+          type: "integer"
+          format: "int32"
+        NutriCoeficiente2PotasioS1:
+          type: "integer"
+          format: "int32"
+        NutriCoeficiente1NitratoS2:
+          type: "integer"
+          format: "int32"
+        NutriCoeficiente2NitratoS2:
+          type: "integer"
+          format: "int32"
+        NutriCoeficiente1PotasioS2:
+          type: "integer"
+          format: "int32"
+        NutriCoeficiente2PotasioS2:
+          type: "integer"
+          format: "int32"
+        FondoEscalaS1:
+          type: "integer"
+          format: "int32"
+        FondoEscalaS2:
+          type: "integer"
+          format: "int32"
+        RetardoMarchaGeneral:
+          type: "integer"
+          format: "int32"
+        RetardoParoGeneral:
+          type: "integer"
+          format: "int32"
+  ApiResponse:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+          default: 1
+          readOnly: true
+        type:
+          type: "string"
+        message:
+          type: "string"
+        Date:
+          type: "string"
+          format: "date-time"
+          description: "Fecha y hora para enviar al equipo (DD/MM/yyyy HH:mm)"
+        modificado: 
+          type: "integer"
+          format: "int32"
+          description: "[0:Modificado Pc, 1:Enviando, 2:Enviado, 3:Modificado equipo]"
+          default: 0
+          readOnly: true
+        fechaModificado:
+          type: "string"
+          format: "date-time"
+          readOnly: true       
+        estado: 
+          type: "integer"
+          format: "int32"
+          description: "[0: Parado, 1: Activo, 2: ERROR MAX, 3: ERROR MIN, 4: ERROR]"
+          default: 0
+          readOnly: true  
+        texto:
+          type: "string" 
