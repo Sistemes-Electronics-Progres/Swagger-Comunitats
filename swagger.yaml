@@ -61,6 +61,8 @@ tags:
   description: "--"
 - name: "Modulos LORA"
   description: "--"
+- name: "Acciones manuales"
+  description: "--"
 schemes:
 - "https"
 paths:
@@ -2162,6 +2164,8 @@ paths:
               $ref: "#/definitions/General"
         "403":
           description: "Sin acceso al equipo"
+          
+       
   /equipos/{id_equipo}/fueraservicio:
     post:
       tags:
@@ -2270,6 +2274,569 @@ paths:
            description: "Acción enviada"
           "403":
             description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/programa{id_programa}:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar order de paro al programa (on/off)"
+        description: ""
+        operationId: "postPrograma"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - name: "id_programa"
+          in: "path"
+          description: "ID del programa"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Poner en marcha, false: Salir de marcha"
+                type: "boolean"
+                default: true
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/programafueraservicio{id_programa}:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar un programa fuera de servicio"
+        description: ""
+        operationId: "postProgramaFueraServicio"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - name: "id_programa"
+          in: "path"
+          description: "ID del programa"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Poner en fuera servicio, false: Salir del fuera de servicio"
+                type: "boolean"
+                default: true
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"            
+  /equipos/{id_equipo}/programasuspender{id_programa}:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar order de suspendes durante un tiempo"
+        description: ""
+        operationId: "postProgrmaSuspender"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - name: "id_programa"
+          in: "path"
+          description: "ID del programa"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "Poner en suspension un programa (minutos)"
+                type: "string"
+                format: "time"
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"            
+  /equipos/{id_equipo}/sectorauto{id_sector}:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar order de sector en automatico (si/no)"
+        description: ""
+        operationId: "postSectorAuto"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - name: "id_sector"
+          in: "path"
+          description: "ID del sector"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Poner en automatico, false: Salir de automatico"
+                type: "boolean"
+                default: true
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"
+  /equipos/{id_equipo}/sectormanualmarcha{id_sector}:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar order de sector manual marcha (on/off)"
+        description: ""
+        operationId: "postManualMarcha"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - name: "id_sector"
+          in: "path"
+          description: "ID del sector"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Poner en manual marcha, false: Salir de manual marcha"
+                type: "boolean"
+                default: true
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"       
+  /equipos/{id_equipo}/finalizarparosaverias:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar order de finalizar paros y averias (on/off)"
+        description: ""
+        operationId: "postFinalizarParosAverias"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: parar los programas aplazados, false: continuar los programas aplazados"
+                type: "boolean"
+                default: false
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"            
+  /equipos/{id_equipo}/programafrequencia{id_programa}:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar order de frequencia en programa de dias"
+        description: ""
+        operationId: "postProgrmaFrequencia"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+        - name: "id_programa"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "dias asta el proximo riego"
+                type: "integer"
+                format: "int32"
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"                        
+  /equipos/{id_equipo}/programaactivaciones{id_programa}:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar order de frequencia en programa de dias"
+        description: ""
+        operationId: "postProgrmaActivaciones"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+        - name: "id_programa"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              numeroActivaciones: 
+                description: "Numero de activaciones"
+                type: "integer"
+                format: "int32"
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"                          
+  /equipos/{id_equipo}/finalizaraplazado:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar orde de finalizar riegos aplazados al equipo (on/off)"
+        description: ""
+        operationId: "postRiegoAplazado"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: para los programas aplazados, false: continua los programas aplazados"
+                type: "boolean"
+                default: false
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"        
+  /equipos/{id_equipo}/finalizaralarma:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar orde de finalizar alarma al equipo (on/off)"
+        description: ""
+        operationId: "postFinalizarAlarma"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Finaliza la alrama, false: continua la alarma"
+                type: "boolean"
+                default: false
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"                 
+  /equipos/{id_equipo}/condicionantefueraservicio:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar orde de finalizar el condicionante de fuera de servicio (on/off)"
+        description: ""
+        operationId: "postFinalizarCondicionanteFueraServicio"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Finaliza condicionante, false: continua condicionante"
+                type: "boolean"
+                default: false
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"                 
+  /equipos/{id_equipo}/condicionanteparodefinitivo:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar orde de finalizar el condicionante de paro definitivo (on/off)"
+        description: ""
+        operationId: "postFinalizarCondicionanteParoDefinitivo"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Finaliza condicionante, false: continua condicionante"
+                type: "boolean"
+                default: false
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"                 
+  /equipos/{id_equipo}/condicionanteriegoaplazado:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Enviar orde de finalizar el condicionante de riego aplazado (on/off)"
+        description: ""
+        operationId: "postFinalizarCondicionanteRiegoAplazado"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              value: 
+                description: "true: Finaliza condicionante, false: continua condicionante"
+                type: "boolean"
+                default: false
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"                 
+  /equipos/{id_equipo}/sensoresContadores:
+      post:
+        tags:
+        - "Acciones manuales"
+        summary: "Actualizar los sensores contadores"
+        description: ""
+        operationId: "postSensoresContadores"
+        consumes:
+        - "application/json"
+        parameters:
+        - name: "id_equipo"
+          in: "path"
+          description: "ID del equipo"
+          required: true
+          type: "integer"
+          maximum: 99999
+          minimum: 1
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "Tipo de acción a enviar"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              numContador: 
+                description: "Numero del sensor a actualizar"
+                type: "integer"
+                format: "int32"
+              valor:
+                description: "valor del sensor para actulizar"
+                type: "integer"
+                format: "it32"
+        responses:
+          "405":
+            description: "Invalid input"
+          "200":
+           description: "Acción enviada"
+          "403":
+            description: "Sin acceso al equipo"             
+            
   /equipos/{id_equipo}/sensoresanalogicos:
     get:
       tags:
